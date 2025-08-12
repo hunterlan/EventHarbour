@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventHarbour.UserService.Presentation.Helpers;
 
-public class UserContext : DbContext
+public class UserContext(DbContextOptions<UserContext> options) : DbContext(options)
 {
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
