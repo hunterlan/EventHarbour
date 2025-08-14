@@ -1,0 +1,6 @@
+@EventHarbour.EventService.Presentation_HostAddress = http://localhost:5261
+
+GET {{EventHarbour.EventService.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

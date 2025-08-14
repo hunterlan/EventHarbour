@@ -1,9 +1,10 @@
-using EventHarbour.UserService.Presentation.Helpers;
+using EventHarbour.EventService.Presentation.Helpers;
+using EventHarbour.EventService.Presentation.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("UserServiceContext");
+var connectionString = builder.Configuration.GetConnectionString("EventServiceContext");
 if (connectionString is null)
 {
     throw new ApplicationException("UserServiceContext connection string is not specified.");
@@ -15,10 +16,9 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContextPool<UserContext>(opt => 
+builder.Services.AddDbContextPool<EventContext>(opt =>
     opt.UseNpgsql(connectionString));
-
-builder.Services.AddProblemDetails();
+builder.Services.AddScoped<IEventService, EventService>();
 
 var app = builder.Build();
 

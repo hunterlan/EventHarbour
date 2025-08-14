@@ -6,6 +6,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHarbour.UserService.Pr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHarbout.UserService.Models", "src\EventHarbout.UserService.Models\EventHarbout.UserService.Models.csproj", "{1E9479E8-9DE5-47F3-828C-F7A953AA464D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventService", "EventService", "{E824321B-2674-4F04-B75A-D74950113EDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHarbour.EventService.Presentation", "src\EventHarbour.EventService.Presentation\EventHarbour.EventService.Presentation.csproj", "{2ED7D136-8131-408A-911A-0E5F60AB60FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHarbour.EventService.Models", "src\EventHarbour.EventService.Models\EventHarbour.EventService.Models.csproj", "{4ACA0BB2-5E6A-4056-B173-39711463FDB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +20,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CF326001-D78F-45DE-B90B-9C6BE0BBC66B} = {D8F03B57-771D-48EB-962C-BB5ABCF1EC85}
 		{1E9479E8-9DE5-47F3-828C-F7A953AA464D} = {D8F03B57-771D-48EB-962C-BB5ABCF1EC85}
+		{2ED7D136-8131-408A-911A-0E5F60AB60FD} = {E824321B-2674-4F04-B75A-D74950113EDC}
+		{4ACA0BB2-5E6A-4056-B173-39711463FDB2} = {E824321B-2674-4F04-B75A-D74950113EDC}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CF326001-D78F-45DE-B90B-9C6BE0BBC66B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,5 +32,13 @@ Global
 		{1E9479E8-9DE5-47F3-828C-F7A953AA464D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E9479E8-9DE5-47F3-828C-F7A953AA464D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E9479E8-9DE5-47F3-828C-F7A953AA464D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ED7D136-8131-408A-911A-0E5F60AB60FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ED7D136-8131-408A-911A-0E5F60AB60FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ED7D136-8131-408A-911A-0E5F60AB60FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ED7D136-8131-408A-911A-0E5F60AB60FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4ACA0BB2-5E6A-4056-B173-39711463FDB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4ACA0BB2-5E6A-4056-B173-39711463FDB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4ACA0BB2-5E6A-4056-B173-39711463FDB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4ACA0BB2-5E6A-4056-B173-39711463FDB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
