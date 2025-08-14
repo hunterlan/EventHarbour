@@ -8,4 +8,5 @@ public interface IEventService
     IEnumerable<ShortInfoEventDto> GetEvents();
     Task<EventDto?> GetEventAsync(int id, CancellationToken token);
     Task<Event> AddEvent(CreateEventDto newEvent, CancellationToken token);
+    Task DeleteEventAsync(int id, CancellationToken token);
 }

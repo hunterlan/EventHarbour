@@ -1,9 +1,7 @@
 using EventHarbour.EventService.Models;
 using EventHarbour.EventService.Presentation.DTOs;
-using EventHarbour.EventService.Presentation.Helpers;
 using EventHarbour.EventService.Presentation.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace EventHarbour.EventService.Presentation.Controllers;
 
@@ -49,13 +47,25 @@ public class EventController : ControllerBase
     }
     
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    public void Put(int id, [FromBody] CreateEventDto newEventDto, CancellationToken cancellationToken)
     {
     }
 
 
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
+        try
+        {
+            await _eventService.DeleteEventAsync(id, cancellationToken);
+            return NoContent();
+        }
+        catch (KeyNotFoundException kEx)
+        {
+            return NotFound();
+        }
     }
 }

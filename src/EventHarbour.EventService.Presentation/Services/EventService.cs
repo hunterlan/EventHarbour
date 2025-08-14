@@ -64,7 +64,6 @@ public class EventService : IEventService
         // Making query to user service...
         // if (isOrganizerExists == null)
 
-
         var isCategoryExists = await _db.Categories.AnyAsync(c => c.CategoryId == newEvent.CategoryId, cancellationToken: token);
         if (isCategoryExists == false)
         {
@@ -103,5 +102,17 @@ public class EventService : IEventService
         await _db.SaveChangesAsync(token);
         
         return @event;
+    }
+
+    public Task DeleteEventAsync(int id, CancellationToken token)
+    {
+        var @event = _db.Events.FirstOrDefault(e => e.EventId == id);
+        if (@event == null)
+        {
+            throw new KeyNotFoundException($"Event with ID {id} is not presented in DB.");
+        }
+        
+        _db.Events.Remove(@event);
+        return _db.SaveChangesAsync(token);
     }
 }
