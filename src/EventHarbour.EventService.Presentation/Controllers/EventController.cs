@@ -37,7 +37,7 @@ public class EventController : ControllerBase
     {
         try
         {
-            var addEvent = await _eventService.AddEvent(newEventDto, cancellationToken);
+            var addEvent = await _eventService.AddEventAsync(newEventDto, cancellationToken);
             return Created("api/events", addEvent);
         }
         catch (KeyNotFoundException kEx)
@@ -47,8 +47,25 @@ public class EventController : ControllerBase
     }
     
     [HttpPut("{id}")]
-    public void Put(int id, [FromBody] CreateEventDto newEventDto, CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<ActionResult<Event>> Put(int id, [FromBody] CreateEventDto newEventDto, CancellationToken cancellationToken)
     {
+        try
+        {
+            var updatedEvent = await _eventService.UpdateEventAsync(id, newEventDto, cancellationToken);
+            return Ok(updatedEvent);
+        }
+        catch (KeyNotFoundException kEx)
+        {
+            return NotFound(kEx.Message);
+        }
+        catch (ArgumentException aEx)
+        {
+            return BadRequest(aEx.Message);
+        }
     }
 
 

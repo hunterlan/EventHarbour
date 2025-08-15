@@ -29,7 +29,7 @@ public class EventService : IEventService
         return @event.ToDto();
     }
 
-    public async Task<Event> AddEvent(CreateEventDto newEvent, CancellationToken token)
+    public async Task<Event> AddEventAsync(CreateEventDto newEvent, CancellationToken token)
     {
         // Making query to user service...
         // if (isOrganizerExists == null)
@@ -80,6 +80,18 @@ public class EventService : IEventService
         if (eventForUpdate is null)
         {
             throw new KeyNotFoundException($"Event ID {eventId} is not presented in DB.");
+        }
+        
+        var isCategoryExist = await _db.Categories.AnyAsync(c => c.CategoryId == eventForUpdate.CategoryId, cancellationToken: token);
+        if (isCategoryExist == false)
+        {
+            throw new ArgumentException($"Category ID {eventForUpdate.CategoryId} is not presented in DB.");
+        }
+        
+        var isStatusExist = await _db.Statuses.AnyAsync(s => s.StatusId == eventForUpdate.StatusId, cancellationToken: token);
+        if (isStatusExist == false)
+        {
+            throw new KeyNotFoundException($"Status ID {eventForUpdate.StatusId} is not presented in DB.");
         }
 
         if (eventForUpdate.TicketsSold > updatedEvent.MaxTickets)
