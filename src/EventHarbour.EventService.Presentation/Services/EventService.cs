@@ -1,5 +1,6 @@
 using EventHarbour.EventService.Models;
 using EventHarbour.EventService.Presentation.DTOs;
+using EventHarbour.EventService.Presentation.Extensions.Mappers;
 using EventHarbour.EventService.Presentation.Helpers;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,18 +10,7 @@ public class EventService : IEventService
 {
     private readonly EventContext _db;
 
-    public IEnumerable<ShortInfoEventDto> GetEvents()
-    {
-        return _db.Events.Select(e => new ShortInfoEventDto
-        {
-            Id = e.EventId,
-            Description = e.Description,
-            Title = e.Title,
-            Price = e.Price,
-            StartTime = e.StartTime,
-            EndTime = e.EndTime,
-        }).AsEnumerable();
-    }
+    public IEnumerable<ShortInfoEventDto> GetEvents() => _db.Events.Select(e => e.ToShortDto()).AsEnumerable();
 
     public async Task<EventDto?> GetEventAsync(int id, CancellationToken token)
     {
@@ -36,27 +26,7 @@ public class EventService : IEventService
         
         // Making query to user service...
 
-        return new EventDto()
-        {
-            Id = @event.EventId,
-            OrganizerFullName = "",
-            Title = @event.Title,
-            Description = @event.Description,
-            Price = @event.Price,
-            StatusName = @event.Status.Name,
-            CategoryName = @event.Category.Name,
-            VenueName = @event.VenueName,
-            VenueAddress = @event.VenueAddress,
-            City = @event.City,
-            Country = @event.Country,
-            Latitude = @event.Latitude,
-            Longitude = @event.Longitude,
-            CreatedAt = @event.CreatedAt,
-            UpdatedAt = @event.UpdatedAt,
-            Currency = @event.Currency,
-            MaxTickets = @event.MaxTickets,
-            TicketsSold = @event.TicketsSold
-        };
+        return @event.ToDto();
     }
 
     public async Task<Event> AddEvent(CreateEventDto newEvent, CancellationToken token)
@@ -102,6 +72,43 @@ public class EventService : IEventService
         await _db.SaveChangesAsync(token);
         
         return @event;
+    }
+
+    public async Task<Event> UpdateEventAsync(int eventId, CreateEventDto updatedEvent, CancellationToken token)
+    {
+        var eventForUpdate = await _db.Events.FindAsync([eventId], cancellationToken: token);
+        if (eventForUpdate is null)
+        {
+            throw new KeyNotFoundException($"Event ID {eventId} is not presented in DB.");
+        }
+
+        if (eventForUpdate.TicketsSold > updatedEvent.MaxTickets)
+        {
+            throw new ArgumentException("Max tickets can't be lower than sold tickets.");
+        }
+
+        eventForUpdate.OrganizerId = updatedEvent.OrganizerId;
+        eventForUpdate.Title = updatedEvent.Title;
+        eventForUpdate.Description = updatedEvent.Description;
+        eventForUpdate.CategoryId = updatedEvent.CategoryId;
+        eventForUpdate.StartTime = updatedEvent.StartTime;
+        eventForUpdate.EndTime = updatedEvent.EndTime;
+        eventForUpdate.VenueName = updatedEvent.VenueName;
+        eventForUpdate.VenueAddress = updatedEvent.VenueAddress;
+        eventForUpdate.City = updatedEvent.City;
+        eventForUpdate.Country = updatedEvent.Country;
+        eventForUpdate.Latitude = updatedEvent.Latitude;
+        eventForUpdate.Longitude = updatedEvent.Longitude;
+        eventForUpdate.Price = updatedEvent.Price;
+        eventForUpdate.Currency = updatedEvent.Currency;
+        eventForUpdate.MaxTickets = updatedEvent.MaxTickets;
+        eventForUpdate.StatusId = updatedEvent.StatusId;
+        eventForUpdate.UpdatedAt = DateTime.Now;
+        
+        _db.Entry(eventForUpdate).State = EntityState.Modified;
+        await _db.SaveChangesAsync(token);
+        
+        return eventForUpdate;
     }
 
     public Task DeleteEventAsync(int id, CancellationToken token)
