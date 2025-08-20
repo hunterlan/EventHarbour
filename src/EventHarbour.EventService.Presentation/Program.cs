@@ -1,3 +1,4 @@
+using EventHarbour.EventService.Presentation.Clients;
 using EventHarbour.EventService.Presentation.Helpers;
 using EventHarbour.EventService.Presentation.Services;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ if (connectionString is null)
 }
 
 // Add services to the container.
-
+builder.Services.AddHttpClient<UserServiceClient>();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

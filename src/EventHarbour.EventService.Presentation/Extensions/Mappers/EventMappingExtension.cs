@@ -5,12 +5,12 @@ namespace EventHarbour.EventService.Presentation.Extensions.Mappers;
 
 public static class EventMappingExtension
 {
-    public static EventDto ToDto(this Event source)
+    public static EventDto ToDto(this Event source, string organizerName)
     {
         return new EventDto
         {
             Id = source.EventId,
-            OrganizerFullName = "",
+            OrganizerFullName = organizerName,
             Title = source.Title,
             Description = source.Description,
             Price = source.Price,

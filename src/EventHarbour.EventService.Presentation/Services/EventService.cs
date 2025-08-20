@@ -1,4 +1,5 @@
 using EventHarbour.EventService.Models;
+using EventHarbour.EventService.Presentation.Clients;
 using EventHarbour.EventService.Presentation.DTOs;
 using EventHarbour.EventService.Presentation.Extensions.Mappers;
 using EventHarbour.EventService.Presentation.Helpers;
@@ -9,6 +10,13 @@ namespace EventHarbour.EventService.Presentation.Services;
 public class EventService : IEventService
 {
     private readonly EventContext _db;
+    private readonly UserServiceClient _userServiceClient;
+
+    public EventService(EventContext db, UserServiceClient userServiceClient)
+    {
+        _db = db;
+        _userServiceClient = userServiceClient;
+    }
 
     public IEnumerable<ShortInfoEventDto> GetEvents() => _db.Events.Select(e => e.ToShortDto()).AsEnumerable();
 
@@ -24,15 +32,22 @@ public class EventService : IEventService
             return null;
         }
         
-        // Making query to user service...
+        var fullname = await _userServiceClient.GetOrganizerFullname(@event.OrganizerId, token);
+        if (fullname == null)
+        {
+            fullname = "N/A";
+        }
 
-        return @event.ToDto();
+        return @event.ToDto(fullname);
     }
 
     public async Task<Event> AddEventAsync(CreateEventDto newEvent, CancellationToken token)
     {
-        // Making query to user service...
-        // if (isOrganizerExists == null)
+        var isOrganizerExist = await _userServiceClient.IsOrganizerExist(newEvent.OrganizerId, token);
+        if (isOrganizerExist == false)
+        {
+            throw new KeyNotFoundException($"Organizer ID {newEvent.OrganizerId} is not presented in service DB.");
+        }
 
         var isCategoryExists = await _db.Categories.AnyAsync(c => c.CategoryId == newEvent.CategoryId, cancellationToken: token);
         if (isCategoryExists == false)
