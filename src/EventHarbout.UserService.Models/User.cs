@@ -9,4 +9,5 @@ public class User
     public DateTime LastLogin { get; set; }
     
     public Profile Profile { get; set; } = null!;
+    public Role Role { get; set; } = null!;
 }
