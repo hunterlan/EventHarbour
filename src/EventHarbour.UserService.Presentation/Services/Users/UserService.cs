@@ -9,6 +9,11 @@ namespace EventHarbour.UserService.Presentation.Services.Users;
 public class UserService : IUserService
 {
     private readonly UserContext _db;
+
+    public UserService(UserContext db)
+    {
+        _db = db;
+    }
     
     public async Task<UserDto?> GetUserAsync(int id)
     {
@@ -47,13 +52,43 @@ public class UserService : IUserService
         return newUserRecord.UserId;
     }
 
-    public Task UpdateUserAsync(UserDto user)
+    //TODO: Think about updating only User table?
+    public async Task UpdateUserAsync(UserDto user, int id)
     {
-        throw new NotImplementedException();
+        var foundUser = await _db.Users
+            .Include(u => u.Profile)
+            .FirstOrDefaultAsync(u => u.UserId == id);
+        
+        if (foundUser is null)
+        {
+            throw new KeyNotFoundException($"User with id {id} not found");
+        }
+        
+        foundUser.Username = user.Username;
+        foundUser.Email = user.Email;
+        //TODO: Encrypt password
+        foundUser.Password = user.Password;
+        foundUser.Email = user.Email;
+        foundUser.Profile.FirstName = user.FirstName;
+        foundUser.Profile.LastName = user.LastName;
+        foundUser.Profile.IsAdult = user.IsAdult;
+        
+        _db.Entry(foundUser).State = EntityState.Modified;
+        await _db.SaveChangesAsync();
     }
 
-    public Task DeleteUserAsync(int id)
+    public async Task DeleteUserAsync(int id)
     {
-        throw new NotImplementedException();
+        var foundUser = await _db.Users
+            .Include(u => u.Profile)
+            .FirstOrDefaultAsync(u => u.UserId == id);
+        
+        if (foundUser is null)
+        {
+            throw new KeyNotFoundException($"User with id {id} not found");
+        }
+        
+        _db.Users.Remove(foundUser);
+        await _db.SaveChangesAsync();
     }
 }

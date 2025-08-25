@@ -1,4 +1,5 @@
 using EventHarbour.UserService.Presentation.Helpers;
+using EventHarbour.UserService.Presentation.Services.Users;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContextPool<UserContext>(opt => 
     opt.UseNpgsql(connectionString));
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddProblemDetails();
 
