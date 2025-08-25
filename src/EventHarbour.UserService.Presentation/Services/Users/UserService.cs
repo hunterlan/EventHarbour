@@ -15,13 +15,23 @@ public class UserService : IUserService
         _db = db;
     }
     
-    public async Task<UserDto?> GetUserAsync(int id)
+    public async Task<UserDto?> GetUserByIdAsync(int id)
     {
         var user = await _db.Users
             .Include(u => u.Role)
             .Include(u => u.Profile)
             .FirstOrDefaultAsync(u => u.UserId == id);
 
+        return user?.ToDto();
+    }
+
+    public async Task<UserDto?> GetUserByLoginAsync(string login)
+    {
+        var user = await _db.Users
+            .Include(u => u.Role)
+            .Include(u => u.Profile)
+            .FirstOrDefaultAsync(u => u.Username.Equals(login));
+        
         return user?.ToDto();
     }
 
