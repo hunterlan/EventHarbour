@@ -26,4 +26,10 @@
       <ProjectReference Include="..\EventHarbout.UserService.Models\EventHarbout.UserService.Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+        <Content Include="..\..\keys\**\*.*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
 </Project>
