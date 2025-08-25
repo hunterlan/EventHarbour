@@ -1,8 +1,10 @@
+using EventHarbour.UserService.Presentation.DTOs;
 using EventHarbout.UserService.Models;
 
 namespace EventHarbour.UserService.Presentation.Services.JWTs;
 
 public interface IJwtService
 {
-    string GenerateToken(User user);
+    JwtDto GenerateToken(UserDto user);
+    string GetPublicKey();
 }

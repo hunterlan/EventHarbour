@@ -1,5 +1,6 @@
 using EventHarbour.UserService.Presentation.Helpers;
 using EventHarbour.UserService.Presentation.Options;
+using EventHarbour.UserService.Presentation.Services.JWTs;
 using EventHarbour.UserService.Presentation.Services.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,6 +28,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContextPool<UserContext>(opt => 
     opt.UseNpgsql(connectionString));
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddOptions<JwtOptions>()
     .Bind(jwtSection)
     .ValidateDataAnnotations()
