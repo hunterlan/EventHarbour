@@ -1,5 +1,3 @@
----
-
 ## **Project Idea**
 
 **"EventHub" – A Multi-Platform Event Management & Recommendation System**
@@ -10,7 +8,6 @@ A microservices-based platform where users can create, discover, and join events
 * **MongoDB** will store flexible, document-oriented data (user activity logs, event comments, recommendations, analytics).
 * The system will use **.NET** microservices for separation of concerns and scalability.
 
----
 
 ## **High-Level Functional Requirements**
 
