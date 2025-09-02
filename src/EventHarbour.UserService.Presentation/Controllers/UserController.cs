@@ -1,4 +1,5 @@
 using EventHarbour.UserService.Presentation.DTOs;
+using EventHarbour.UserService.Presentation.Services.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,11 +9,17 @@ namespace EventHarbour.UserService.Presentation.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
         // GET api/<UserController>/5
         [HttpGet("{id}")]
         public ActionResult<UserDto> Get(int id)
         {
-            throw new NotImplementedException();
+            return Ok(_userService.GetUserByIdAsync(id));
         }
 
         // POST api/<UserController>

@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHarbour.EventService.P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHarbour.EventService.Models", "src\EventHarbour.EventService.Models\EventHarbour.EventService.Models.csproj", "{4ACA0BB2-5E6A-4056-B173-39711463FDB2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHarbour.UserService.Tests", "tests\EventHarbour.UserService.Tests\EventHarbour.UserService.Tests.csproj", "{E1604710-65DB-415E-BFDB-03F05D081608}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHarbour.ApiGateway", "src\EventHarbour.ApiGateway\EventHarbour.ApiGateway.csproj", "{56273A92-B960-4042-B51A-D9210980A8E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +26,7 @@ Global
 		{1E9479E8-9DE5-47F3-828C-F7A953AA464D} = {D8F03B57-771D-48EB-962C-BB5ABCF1EC85}
 		{2ED7D136-8131-408A-911A-0E5F60AB60FD} = {E824321B-2674-4F04-B75A-D74950113EDC}
 		{4ACA0BB2-5E6A-4056-B173-39711463FDB2} = {E824321B-2674-4F04-B75A-D74950113EDC}
+		{E1604710-65DB-415E-BFDB-03F05D081608} = {D8F03B57-771D-48EB-962C-BB5ABCF1EC85}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CF326001-D78F-45DE-B90B-9C6BE0BBC66B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -40,5 +45,13 @@ Global
 		{4ACA0BB2-5E6A-4056-B173-39711463FDB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4ACA0BB2-5E6A-4056-B173-39711463FDB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4ACA0BB2-5E6A-4056-B173-39711463FDB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1604710-65DB-415E-BFDB-03F05D081608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1604710-65DB-415E-BFDB-03F05D081608}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1604710-65DB-415E-BFDB-03F05D081608}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1604710-65DB-415E-BFDB-03F05D081608}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56273A92-B960-4042-B51A-D9210980A8E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56273A92-B960-4042-B51A-D9210980A8E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56273A92-B960-4042-B51A-D9210980A8E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56273A92-B960-4042-B51A-D9210980A8E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
